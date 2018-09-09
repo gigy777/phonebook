@@ -1,0 +1,69 @@
+<div id="wrapper">
+<form>
+  <div class="form-group">
+    <label for="search">Search</label>
+    <input (keyup)='search($event)' type="search" class="form-control" id="search" placeholder="Search contact" >
+  </div>
+
+</form>
+<table class="table" >
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First name</th>
+      <th scope="col">Last name</th>
+      <th scope="col">Phone</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let c of contacts;let i = index">
+      <th scope="row">{{i+1}}</th>
+      <td>{{c.first_name}}</td>
+      <td>{{c.last_name}}</td>
+      <td>{{c.phone}}</td>
+      <td class='pointer' ><button [routerLink]='["/contact",c.id]' class="btn btn-primary">edit</button></td>
+      <td class='pointer' ><button (click)='deleteContact(c.id)' class="btn btn-danger">delete</button></td>
+    </tr>
+
+  </tbody>
+</table>
+</div>
+
+<button class="button my-button" data-toggle="modal" data-target="#addContactModal">+</button>
+
+<div class="modal" id="addContactModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Contact</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="ContactForm" (ngSubmit)="addContact()">
+          <div class="form-group">
+            <label for="First Name">First Name</label>
+            <input type="text" formControlName="first_name" class="form-control" id="first_name" placeholder="Enter First Name">
+          </div>
+          <div class="form-group">
+            <label for="Last Name">Last Name</label>
+            <input type="text" formControlName="last_name" class="form-control" id="last_name" placeholder="Enter Last Name">
+          </div>
+          <div class="form-group">
+            <label for="Phone">Phone</label>
+            <input type="text" formControlName="phone" class="form-control" id="phone" placeholder="Enter Phone">
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!ContactForm.valid">Add</button>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
